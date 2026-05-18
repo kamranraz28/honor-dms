@@ -6,8 +6,17 @@
         @else
             <img src="{{ asset('resources/assets/dms/dist/img/logo.png') }}" class="responsive no-repeat" alt="logo" style="width: 200px; height: 64px">
         @endif -->
-        <img src="{{ asset('resources/assets/dms/dist/img/logo.png') }}" class="responsive no-repeat" alt="logo" style="width: 200px; height: 64px">
-
+        <img
+            src="{{ asset('resources/assets/dms/dist/img/logo.png') }}"
+            class="responsive no-repeat"
+            alt="logo"
+            style="
+                width: 200px;
+                height: 64px;
+                object-fit: contain;
+                filter: brightness(0) invert(1);
+            "
+        >
     </a>
 
     <!-- Header Navbar -->
