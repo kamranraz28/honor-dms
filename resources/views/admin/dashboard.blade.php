@@ -309,6 +309,37 @@
     @endif
 </div>
 
+<!-- Filter Section -->
+<form method="GET" action="{{ route('admin.dashboard') }}" class="form-inline" style="margin: 10px 12px 0; padding: 14px 18px; background: #0f1724; border-radius: 12px; border: 1px solid rgba(255,255,255,0.03); display:flex; flex-wrap:wrap; gap:12px; align-items:center;">
+    <div style="display:flex; align-items:center; gap:8px;">
+        <label for="filter_brand" style="color:#98b2c8; font-size:12px; font-weight:700; text-transform:uppercase;">Brand</label>
+        <select name="brand_id" id="filter_brand" class="select2 form-control" style="width:200px;">
+            <option value="">All Brands</option>
+            @foreach ($brands as $brand)
+                <option value="{{ $brand->id }}" {{ $selectedBrandId == $brand->id ? 'selected' : '' }}>{{ $brand->name }}</option>
+            @endforeach
+        </select>
+    </div>
+    <div style="display:flex; align-items:center; gap:8px;">
+        <label for="filter_start_date" style="color:#98b2c8; font-size:12px; font-weight:700; text-transform:uppercase;">From</label>
+        <input type="text" name="start_date" id="filter_start_date" class="form-control datepicker" value="{{ $selectedStartDate }}" placeholder="Start Date" style="width:140px; background:#07121a; border:1px solid rgba(255,255,255,0.06); color:#e6eef8; border-radius:6px; padding:6px 10px;">
+    </div>
+    <div style="display:flex; align-items:center; gap:8px;">
+        <label for="filter_end_date" style="color:#98b2c8; font-size:12px; font-weight:700; text-transform:uppercase;">To</label>
+        <input type="text" name="end_date" id="filter_end_date" class="form-control datepicker" value="{{ $selectedEndDate }}" placeholder="End Date" style="width:140px; background:#07121a; border:1px solid rgba(255,255,255,0.06); color:#e6eef8; border-radius:6px; padding:6px 10px;">
+    </div>
+    <button type="submit" class="action-btn action-sync" style="border:none; cursor:pointer;">
+        <span class="btn-icon"><i class="bi bi-funnel" style="font-size:14px;"></i></span>
+        <span class="btn-text">Apply Filters</span>
+    </button>
+    @if ($selectedBrandId || $selectedStartDate || $selectedEndDate)
+        <a href="{{ route('admin.dashboard') }}" class="action-btn action-refresh" style="text-decoration:none;">
+            <span class="btn-icon"><i class="bi bi-x-lg" style="font-size:14px;"></i></span>
+            <span class="btn-text">Clear Filters</span>
+        </a>
+    @endif
+</form>
+
 <!-- Darker stats container -->
 <div class="stats-section">
   <div class="stats-row" style="margin-left:4px; margin-right:4px;">
@@ -766,6 +797,22 @@
   }
   window.addEventListener('load', adjustCanvasHeights);
   window.addEventListener('resize', adjustCanvasHeights);
+
+  // initialize filter controls – retry until jQuery/plugins are available
+  (function initFilters(){
+    if(typeof jQuery === 'undefined' || !jQuery.fn.select2 || !jQuery.fn.datepicker){
+      setTimeout(initFilters, 150);
+      return;
+    }
+    try {
+      $('#filter_brand').select2();
+      $('#filter_start_date, #filter_end_date').datepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        todayHighlight: true
+      });
+    } catch(e){}
+  })();
 
   // Optional UX: show syncing animation on Data Sync button while clicked (cleared automatically)
   (function(){

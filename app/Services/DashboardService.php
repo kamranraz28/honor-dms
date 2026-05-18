@@ -13,8 +13,8 @@ class DashboardService
         $this->repo = $repo;
     }
 
-    public function getDashboardData()
+    public function getDashboardData($brandId = null, $startDate = null, $endDate = null)
     {
-        return $this->repo->getDashboardData();
+        return $this->repo->getDashboardData($brandId, $startDate, $endDate);
     }
 }

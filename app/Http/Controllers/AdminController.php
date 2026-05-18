@@ -142,7 +142,7 @@ class AdminController extends Controller
         return view('generate-order-report', compact('prompts'));
     }
 
-    public function DashboardView()
+    public function DashboardView(Request $request)
     {
         if (Auth::user()->level != 500) {
             return redirect()->route('logout');
@@ -151,7 +151,17 @@ class AdminController extends Controller
         $_SESSION['favicon'] = self::$favicon;
         $_SESSION['logo'] = self::$logo;
 
-        $dashboard = $this->dashboardService->getDashboardData();
+        $brandId = $request->input('brand_id');
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        $brands = Brand::select('id', 'name')->orderBy('name')->get();
+
+        $dashboard = $this->dashboardService->getDashboardData($brandId, $startDate, $endDate);
+        $dashboard['brands'] = $brands;
+        $dashboard['selectedBrandId'] = $brandId;
+        $dashboard['selectedStartDate'] = $startDate;
+        $dashboard['selectedEndDate'] = $endDate;
 
         return view('admin.dashboard', $dashboard);
     }
