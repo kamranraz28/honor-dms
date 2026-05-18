@@ -1,0 +1,2 @@
+Product Name,Product Color,IMEI-1,IMEI-2,Warranty Period,Date
+A,A,111,111,365,

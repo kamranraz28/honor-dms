@@ -1,0 +1,2 @@
+Product Name,Product Color,IMEI-1,IMEI-2,Warranty Period,Date
+NOKIA 150 TA-1582 DS,Red,111,111,365,

@@ -1,0 +1,53 @@
+Tables:
+- brands(id, name)
+- cats(id, name)
+- products(id, cat_id, brand_id, name, model, product_code, color, dp, details)
+- divisions(id, name)
+- districts(id, division_id, dis_id, name)
+- upazilas(id, district_id, name)
+- users(id, firstname, officeid, 'division_id', 'district_id', 'upazila_id', level)
+- stocks(id, product_id, brand_id, imei, sno, wperiod, created_at)
+- orders(id, upazila_id, user_id, status, created_at)
+- orderspostings(id, orader_number, approve_by, status, remarks, delivery_info)
+- orderspostingdetails(id, orderspostings_id, product_id, quantity, price)
+- orderspostingdetailsimis(id, orderspostingdetails_id, order_number, imi, imi2, product_id, created_by)
+- purchases(id, user_id, order_number, stock_id, product_id, sno, imei, status, created_at)
+- retailers(id, retailer_id, user_id)
+- sales(id, user_id, ruser_id, product_id, imei, sno, created_at)
+- smsdetails(id, product_id, user_id, mobile, imei, sno, quantity, wperiod, created_at)
+- tsoupazilas(id, upazila_id, user_id, name)
+- replaces(id, user_id, imei, sno, replace_imei2, product_id, 'created_at')
+- preturns(id, user_id, product_id, imei, sno, status, created_at)
+
+Relationships:
+- products.cat_id → cats.id
+- products.brand_id → brands.id
+- districts.division_id → divisions.id
+- upazilas.district_id → districts.id
+- users.upazila_id → upazilas.id
+- users.division_id → divisions.id
+- users.district_id → districts.id
+- stocks.product_id → products.id
+- stocks.brand_id → brands.id
+- orders.user_id → users.id
+- orders.upazila_id → upazilas.id
+- orderspostings.orader_number → orders.id
+- orderspostings.approve_by → users.id
+- orderspostingdetails.orderspostings_id → orderspostings.id
+- orderspostingdetails.product_id → products.id
+- orderspostingdetailsimis.orderspostingdetails_id → orderspostingdetails.id
+- orderspostingdetailsimis.product_id → products.id
+- purchases.user_id → users.id
+- purchases.product_id → products.id
+- purchases.order_number → orders.id
+- purchases.stock_id → stocks.id
+- sales.user_id → users.id
+- sales.ruser_id → users.id
+- sales.product_id → products.id
+- retailers.user_id → users.id
+- smsdetails.product_id → products.id
+- smsdetails.user_id → users.id
+- replaces.user_id → users.id
+- replaces.product_id → products.id
+- preturns.user_id → users.id
+- preturns.product_id → products.id

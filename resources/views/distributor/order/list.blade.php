@@ -1,0 +1,212 @@
+@extends('layouts.master_distributor')
+
+@section('title')
+    {{ 'E-Warranty Ststem :: Orader List' }}
+@endsection
+
+@section('content')
+    <!-- content part================================ -->
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <!-- bc part================================ -->
+        @include('distributor.bc.bc')
+        <!-- bc part================================ -->
+
+        <!-- Main content -->
+        <section class="content">
+            <!-- Small boxes (Stat box) -->
+            <!-- /.row -->
+            <div class="new-box row">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+
+                    <h1 class="orader">
+                        Order List
+                    </h1>
+
+                    <div class="float-right">
+                        <a href="{{ route('distributor.create') }}" class="btn btn-primary btn-lg float-right" data-placement="left">
+                            {{ __('Create New Order') }}
+                        </a>
+                    </div>
+                </div>
+
+                @if ($message = Session::get('message'))
+                    <div class="alert alert-success">
+                        <p>{{ $message }}</p>
+                    </div>
+                @endif
+
+                @if ($message = Session::get('success'))
+                    <div class="alert alert-success">
+                        <p>{{ $message }}</p>
+                    </div>
+                @endif
+
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                <form id="myForm" action="{{ route('distributor.order') }}" method="GET"
+                        style="max-width: 400px; margin: 40px 0px;">
+                        <label for="dropdown">Select an option:</label>
+                        <select id="dropdown" class="form-control" name="search">
+                            <option value="0" {{ $queryarray==0 ? 'selected' : '' }}>Draft</option>
+                            <option value="1" {{ $queryarray==1 ? 'selected' : '' }}>Waiting</option>
+                            <option value="2" {{ $queryarray==2 ? 'selected' : '' }}>Processing</option>
+                            <option value="3" {{ $queryarray==3 ? 'selected' : '' }}>Submitted</option>
+                            <option value="5" {{ $queryarray==5 ? 'selected' : '' }}>Delivered</option>
+                            <option value="7" {{ $queryarray==7 ? 'selected' : '' }}>Cancelled</option>
+                        </select>
+                </form>
+
+
+                <table id="example" class="display" cellspacing="5" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Order No</th>
+                            <th>LD</th>
+                            <th>Order Date </th>
+                            
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach ($oraderList as $item)
+                            <tr>
+                                <td>{{ $item->id }} </td>
+                                <td title="$item->status">{{ $item->users->firstname }} ({{ $item->users->officeid }})
+                                </td>
+                                <td>
+                                    @php
+                                        echo date('d-M-Y', strtotime($item->created_at));
+                                    @endphp
+                                </td>
+
+                                
+                                @switch($item->status)
+                                    @case(0)
+                                        <td>
+                                            <p class="testdanger">Drft</p>
+                                        </td>
+                                        <td>
+
+                                            <form action="{{ route('distributor.destroy', $item->id) }}" method="POST">
+                                                <a href="{{ route('distributor.details', $item->id) }}" class="btn btn-md btn-primary">
+                                                    Details
+                                                </a>
+                                                
+                                                @if ($item->status == 0)
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit"
+                                                        class="btn btn-danger btn-md">{{ __('Delete') }}</button>
+                                                        
+                                                @endif
+                                            </form>
+                                        </td>
+                                    @break
+
+                                    @case(1)
+                                        <td>
+                                            <p class="testdanger">Waiting</p>
+                                        </td>
+                                        <td> <a href="{{ route('distributor.details', "$item->id") }}" type="button"
+                                                class="btn btn-md btn-primary">Details</a>
+                                                </td>
+
+                                    @break
+
+                                    @case(2)
+                                        <td>
+                                            <p class="testdraft"> Processing</p>
+                                        </td>
+                                        <td> <a href="{{ route('distributor.details', "$item->id") }}"
+                                                class="btn btn-md btn-primary">Approved </a></td>
+                                    @break
+
+                                    @case(3)
+                                        <td>
+                                            <p class="testdraft"> Submited </p>
+                                        </td>
+                                        <td><a href="{{ route('distributor.details', "$item->id") }}"
+                                                class="btn btn-md btn-primary">Details </a></td>
+                                    @break
+
+                                    @case(5)
+                                        <td>
+                                            <p class="testsuccess">Deliverd </p>
+                                        </td>
+                                        <td><a href="{{ route('distributor.details', "$item->id") }}"
+                                                class="btn btn-md btn-success">Details </a>
+                                            <a href="{{ route('distributor.print', "$item->id") }}" target="_blank"
+                                                class="btn btn-md btn-warning">Print
+                                            </a>
+                                            <a href="{{ route('distributor.printinvoice', $item->orderposting->id) }}" target="_blank"
+                                                        class="btn btn-md btn-success">
+                                                     Invoice Print
+                                                    </a>
+                                        </td>
+                                    @break
+
+                                    @case(7)
+                                                        <td>
+                                                            <p class="testdanger"> Cancelled </p>
+                                                        </td>
+                                                        
+                                                        <!-- <td><a href="" class="btn btn-md btn-info">
+                                                    Edit
+                                                </a></td> -->
+                                                      
+                                                    @break
+
+                                    @default
+                                @endswitch
+
+                            </tr>
+                        @endforeach
+                        
+
+                    </tbody>
+
+                </table>
+                <table>
+
+                    <tbody>
+                        <tr>
+                            <td colspan="6">
+                                {{--  {{ $purchases->links() }} --}}
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+
+
+
+            </div>
+            {{ $oraderList->appends(['search' => $queryarray])->links() }}
+
+        </section>
+
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- content part================================ -->
+@endsection
+
+@push('scripts')
+<script>
+    var dropdown = document.getElementById("dropdown");
+    dropdown.addEventListener("change", function () {
+        document.getElementById("myForm").submit();
+    });
+</script>
+@endpush

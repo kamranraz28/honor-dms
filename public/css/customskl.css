@@ -1,0 +1,145 @@
+.table-bordered>thead>tr>th,
+.table-bordered>tbody>tr>th,
+.table-bordered>tfoot>tr>th,
+.table-bordered>thead>tr>td,
+.table-bordered>tbody>tr>td,
+.table-bordered>tfoot>tr>td {
+    border: 1px solid #333;
+}
+
+.table-bordered {
+    border: 1px solid #000000;
+}
+
+.new-box {
+    padding: 25px;
+    background: #fff;
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+span.select2.select2-container.select2-container--default {
+    width: 100% !important;
+}
+
+label {
+    width: 100%;
+}
+
+.w-600 {
+    max-width: 600px;
+    margin: auto;
+}
+
+.orader {
+    font-size: 42px;
+    background: -webkit-linear-gradient(#000000, #000000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+    margin-top: 0px;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.info-box {
+    box-shadow: 0 0 1px rgba(0, 0, 0, .125), 0 1px 3px rgba(0, 0, 0, .2);
+    border-radius: 0.25rem;
+    background-color: #fff;
+    display: -ms-flexbox;
+    display: flex;
+    margin-bottom: 1rem;
+    min-height: 80px;
+    padding: 0.5rem;
+    position: relative;
+    width: 100%;
+}
+
+.bg-info {
+    background-color: #17a2b8 !important;
+}
+
+.bg-info,
+.bg-info>a {
+    color: #fff !important;
+}
+
+.bg-success {
+    background-color: #28a745 !important;
+}
+
+.bg-success,
+.bg-success>a {
+    color: #fff !important;
+}
+
+.info-box {
+    box-shadow: 0 0 1px rgba(0, 0, 0, .125), 0 1px 3px rgba(0, 0, 0, .2);
+    border-radius: 0.25rem;
+    background-color: #fff;
+    display: -ms-flexbox;
+    display: flex;
+    margin-bottom: 1rem;
+    min-height: 80px;
+    padding: 0.5rem;
+    position: relative;
+    width: 100%;
+}
+
+.info-box.custombox {
+    padding: 21px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px !important;
+    border-radius: 7px;
+}
+
+.custombox h4 {
+    font-size: 34px;
+}
+
+span.info-box-icon {
+    border-radius: 47px;
+    background: #3c8dbc24;
+    color: #3c8dbc;
+}
+
+.custombox {
+    color: #657189;
+    font-weight: 700;
+}
+
+.custombox .info-box-content {
+    padding: 0;
+    margin: 12px 0px 0px 36px;
+}
+ 
+.testsuccess {
+    color: #00c975;
+    background-color: #39feac1d;
+    padding: 8px 21px;
+    font-size: 15px;
+    font-weight: normal;
+    max-width: 137px;
+    text-align: center;
+}
+.testdanger{
+    color: #fc3856;
+    background-color: #fc385518;
+    padding: 8px 21px;
+    font-size: 15px;
+    font-weight: normal;
+    max-width: 137px;
+    text-align: center;
+}
+
+.testdraft{
+    color: #5f5a5b;
+    background-color: #5f5a5b11;
+    padding: 8px 21px;
+    font-size: 15px;
+    font-weight: normal;
+    max-width: 137px;
+    text-align: center;
+}
